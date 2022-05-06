@@ -8,12 +8,21 @@
   <title>Bébés Sucrés</title>
 </head>
 
-<body id='body' class="background custom-cursor">
-  <div class='content'>
-    <h1></h1>
-    <audio id="audio" src="song.mp3" controls autoplay hidden></audio>
+<body id="body" class="background custom-cursor">
+  <div id="board">
+    <div class='content'>
+      <h1></h1>
+      <audio id="audio" src="song.mp3" controls autoplay hidden></audio>
 
-    <div class="wordart rainbow"><span class="text">VOUS ALLEZ ME MANQUER MES BÉBÉS SUCRÉS</span></div>
+      <div class="wordart rainbow"><span class="text">JE M'ENNUIE DE VOUS MES BÉBÉS SUCRÉS</span></div>
+
+      <div class="image-container">
+        <img class="jeanwill" src="jeanwill.png" alt="On va particulièrement s'ennuyer de celui-là">
+      </div>
+
+      <div class="countdown-text">ON SE VOIT DANS</div>
+      <div id="countdown" class="countdown-text blink"></div>
+    </div>
   </div>
 </body>
 
@@ -24,6 +33,12 @@
   body {
     height: 100%;
     width: 100%;
+    user-select: none;
+  }
+
+  #board {
+    width: 100%;
+    height: 100%;
   }
 
   .background {
@@ -31,6 +46,17 @@
     background-size: cover;
     width: 100%;
     height: 100%;
+  }
+
+  .image-container {
+    margin: 1rem;
+    max-width: 32rem;
+    max-height: 32rem;
+  }
+
+  .jeanwill {
+    max-width: 100%;
+    max-height: 100%;
   }
 
   .custom-cursor {
@@ -48,6 +74,7 @@
     font-family: Arial, sans-serif;
     font-size: 4em;
     font-weight: bold;
+    text-align: center;
     position: relative;
     z-index: 1;
     display: inline-block;
@@ -72,6 +99,26 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  .countdown-text {
+    font-family: Arial, sans-serif;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+
+    /* Text stroke */
+    text-shadow: -1px -1px 0 red, 1px -1px 0 blue, -1px 1px 0 green, 1px 1px 0 yellow;
+  }
+
+  .blink {
+    animation: blinker 1s linear infinite;
+  }
+
+  @keyframes blinker {
+    50% {
+      color: red;
+    }
   }
 
   body {
@@ -128,7 +175,7 @@
   const duration = 3000;
   const speed = 0.5;
   const cursorXOffset = 0;
-  const cursorYOffset = 250;
+  const cursorYOffset = 0;
 
   var hearts = [];
 
@@ -212,4 +259,33 @@
         start, scale);
     }
   }
+
+  // Set the date we're counting down to
+  var countDownDate = new Date("Aug 28, 2022 11:17:01").getTime();
+
+  // Update the count down every 1 second
+  var x = setInterval(function() {
+
+    // Get today's date and time
+    var now = new Date().getTime();
+
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Output the result in an element with id="demo"
+    document.getElementById("countdown").innerHTML = days + " JOURS " + hours + " HEURES "
+    + minutes + " MINUTES " + seconds + " SECONDES";
+
+    // If the count down is over, write some text
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("countdown").innerHTML = "LIVE";
+    }
+  }, 1000);
 </script>
